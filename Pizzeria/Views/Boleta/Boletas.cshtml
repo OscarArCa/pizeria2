@@ -1,0 +1,148 @@
+﻿@model IEnumerable<Pizzeria.Models.Boleta.Boleta>
+
+@{
+    ViewBag.Title = "Boletas";
+}
+
+
+<p style="color:dodgerblue">@TempData["Mensaje"]</p>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #fffdf9;
+    }
+
+    h2 {
+        font-size: 2.2rem;
+    }
+
+    .table thead {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #fff8f2;
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+        font-size: 0.93rem;
+    }
+
+    .btn-warning {
+        background-color: #ff9800;
+        border: none;
+        color: #fff;
+        transition: 0.3s;
+    }
+
+        .btn-warning:hover {
+            background-color: #fb8c00;
+        }
+
+    .btn-danger {
+        background-color: #e53935;
+        border: none;
+        color: #fff;
+    }
+
+        .btn-danger:hover {
+            background-color: #c62828;
+        }
+
+    .alert-info {
+        background-color: #e1f5fe;
+        border: 1px solid #81d4fa;
+        color: #01579b;
+    }
+
+    .text-success {
+        color: #2e7d32 !important;
+    }
+
+    .text-danger {
+        color: #d32f2f !important;
+    }
+
+    .shadow {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+
+<div class="container mt-5 animate__animated animate__fadeIn">
+    <h2 class="text-center mb-4 text-danger fw-bold">🧾 Ver Boletas</h2>
+
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-info text-center fw-semibold">
+            @TempData["Mensaje"]
+        </div>
+    }
+
+    <div class="table-responsive shadow rounded bg-white p-3">
+        <table class="table table-bordered table-striped align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Comprob.</th>
+                    <th>Fecha</th>
+                    <th>DNI</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Cód. Producto</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th>IGV (18%)</th>
+                    <th>Total</th>
+                    <th>Descargar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.numero_boleta</td>
+                        <td>@item.fecha</td>
+                        <td>@item.dni_cliente</td>
+                        <td>@item.nombre_cliente</td>
+                        <td>@item.apellido_cliente</td>
+                        <td>@item.cod_producto</td>
+                        <td>@item.nombre_producto</td>
+                        <td>@item.cantidad_producto</td>
+                        <td>S/ @item.precio_producto.ToString("F2")</td>
+                        <td class="text-success">S/ @item.sub_total.ToString("F2")</td>
+                        <td>S/ @item.igv.ToString("F2")</td>
+                        <td class="fw-bold text-danger">S/ @item.total.ToString("F2")</td>
+                        <td>
+                            @Html.ActionLink("📄 Ver", "Descargar", new
+                            {
+                                orden = item.numero_boleta,
+                                nombre = item.nombre_cliente,
+                                dni = item.dni_cliente,
+                                fecha = item.fecha,
+                                codPro = item.cod_producto,
+                                nombrePro = item.nombre_producto,
+                                cantidad = item.cantidad_producto,
+                                precioUni = item.precio_producto,
+                                imp = item.sub_total,
+                                igv = item.igv,
+                                total = item.total
+                            }, new { @class = "btn btn-sm btn-warning", target = "_blank" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4 text-end pe-2">
+        <p class="fw-bold fs-5 text-success">Total de boletas: @ViewBag.TotalBoletas</p>
+        <a href="@Url.Action("Cerrar")" class="btn btn-danger fw-semibold">🧾 Cerrar Caja</a>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+﻿@model Pizzeria.Models.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            font-family: 'Poppins', sans-serif;
+        }
+
+            .login-container h2 {
+                text-align: center;
+                color: #0077b6;
+                margin-bottom: 30px;
+                font-weight: bold;
+            }
+
+        .form-label {
+            font-weight: 600;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .form-control {
+            padding: 15px 15px;
+            border: 1px solid #b0bec5;
+            border-radius: 10px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            min-width: 90%;
+        }
+
+            .form-control:focus {
+                border-color: #0077b6;
+                box-shadow: 0 0 0 0.2rem rgba(0, 119, 182, 0.25);
+            }
+
+            .form-control::placeholder {
+                font-family: 'Poppins', sans-serif;
+            }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background-color: #0077b6;
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 10px;
+            margin-top: 25px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+        }
+
+            .btn-login:hover {
+                background-color: #023e8a;
+                box-shadow: 0 4px 12px rgba(0, 119, 182, 0.4);
+            }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.95rem;
+        }
+
+            .login-link a {
+                color: #0077b6;
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+                .login-link a:hover {
+                    text-decoration: underline;
+                }
+
+        .mensaje-error {
+            color: #e63946;
+            text-align: center;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+    </style>
+
+
+    <div class="login-container">
+        <p class="mensaje-error">@ViewBag.Mensaje</p>
+
+        <h2>Bienvenido al sistema de pizzería 🍕</h2>
+
+        @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+        {
+            <label for="user" class="form-label">Usuario:</label>
+            <input type="text" id="user" name="user" class="form-control" required placeholder="Ingresa tu usuario" />
+
+            <label for="pass" class="form-label">Contraseña:</label>
+            <input type="password" id="pass" name="pass" class="form-control" required placeholder="Ingresa tu contraseña" />
+
+            <button type="submit" class="btn-login">Iniciar Sesión</button>
+        }
+
+        <div class="login-link">
+            ¿No tienes una cuenta?
+            <a href="@Url.Action("Register", "Login")">Regístrate aquí</a>
+        </div>
+    </div>
+
+</body>
+</html>
